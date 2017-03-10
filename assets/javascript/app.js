@@ -36,18 +36,12 @@ function displayGiphys() {
             var image = $("<img>");
             image.attr("src", results[i].images.fixed_height_still.url)
             	.attr("alt", results[i].slug)
-            	.data("still", results[i].images.fixed_height_still.url)
-            	.data("animate", results[i].images.fixed_height.url)
-            	.data("state", "still")
+            	.attr("data-still", results[i].images.fixed_height_still.url)
+            	.attr("data-animate", results[i].images.fixed_height.url)
+            	.attr("data-state", "still")
             	.addClass("gifff");
 
         	gifDiv.append(p).append(image).appendTo("#giphys-view");
-
-
-            // $("#giphys-view")
-            // 	.append(gifDiv)
-            // 	.append(p)
-            // 	.append(image);
 		};
 	});
 };
@@ -75,10 +69,28 @@ $("#add-button").on("click", function(event) {
 	renderButtons();
 })
 
+// Setting on event click function for any .gifff class to run animate state on/off function
+
+$(document).on("click", ".gifff", function() {
+
+var state = $(this).attr("data-state");
+
+      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+      // Then, set the image's data-state to animate
+      // Else set src to the data-still value
+      
+	if (state === "still") {
+		$(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+});
+
 // Adding click event listeners to all elements with a class of "movie"
 
 $(document).on("click", ".movie-button", displayGiphys);
-
 
 // Calling the renderButtons function to display the initial buttons from the array
 
