@@ -43,13 +43,12 @@ function displayGiphys() {
 					ratingColor = "label label-default";
 				};
 
-			var gifSpan = $("<span>");
+			var gifDiv = $('<div class="inlineDiv">');
             
             var span = $("<span>")
             	.addClass(ratingColor)
             	.text(rating.toUpperCase());
             
-            var div = $("<div>");
             var image = $("<img>");
             image.attr("src", results[i].images.fixed_height_still.url)
             	.attr("alt", results[i].slug)
@@ -58,7 +57,7 @@ function displayGiphys() {
             	.attr("data-state", "still")
             	.addClass("gifff");
 
-        	gifSpan.append(span).append(image).appendTo("#giphys-view");
+        	gifDiv.append(span).append(image).appendTo("#giphys-view");
 		};
 	});
 };
