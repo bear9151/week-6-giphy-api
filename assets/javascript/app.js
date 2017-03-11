@@ -27,12 +27,29 @@ function displayGiphys() {
 	}).done(function(response) {
 		var results = response.data;
 		for (var i = 0; i < results.length; i++) {
-			var gifDiv = $("<div>")
-				.addClass("well");
-            
             var rating = results[i].rating;
-            var p = $("<p>").text("Rating: " + rating);
+			var ratingColor;
+				if (rating === "y") {
+					ratingColor = "label label-success";
+				} else if (rating === "g") {
+					ratingColor = "label label-info";
+				} else if (rating === "pg") {
+					ratingColor = "label label-primary";
+				} else if (rating === "pg-13") {
+					ratingColor = "label label-warning";
+				} else if (rating === "r") {
+					ratingColor = "label label-danger";
+				} else {
+					ratingColor = "label label-default";
+				};
+
+			var gifSpan = $("<span>");
             
+            var span = $("<span>")
+            	.addClass(ratingColor)
+            	.text(rating.toUpperCase());
+            
+            var div = $("<div>");
             var image = $("<img>");
             image.attr("src", results[i].images.fixed_height_still.url)
             	.attr("alt", results[i].slug)
@@ -41,7 +58,7 @@ function displayGiphys() {
             	.attr("data-state", "still")
             	.addClass("gifff");
 
-        	gifDiv.append(p).append(image).appendTo("#giphys-view");
+        	gifSpan.append(span).append(image).appendTo("#giphys-view");
 		};
 	});
 };
@@ -53,7 +70,7 @@ function renderButtons() {
 	$("#buttons-view").empty();
 	$.each(topics, function(x, y) {
 		var a = $("<button>");
-		a.addClass("movie-button");
+		a.addClass("movie-button btn btn-primary");
 		a.attr("data-name", y);
 		a.text(y);
 		$("#buttons-view").append(a);
@@ -78,7 +95,7 @@ var state = $(this).attr("data-state");
       // If the clicked image's state is still, update its src attribute to what its data-animate value is.
       // Then, set the image's data-state to animate
       // Else set src to the data-still value
-      
+
 	if (state === "still") {
 		$(this).attr("src", $(this).attr("data-animate"));
         $(this).attr("data-state", "animate");
