@@ -7,6 +7,9 @@ var topics = [
 	"Bridesmaids",
 	"Frozen",
 	"Anchorman",
+	"The Notebook",
+	"Step Brothers",
+	"Elf",
 	]
 
 //Function for actually displaying the resulted giphys
